@@ -1,0 +1,14 @@
+version: '3.3'
+
+services:
+  app:
+    image: 'composer_movefile'
+    build:
+      context: .
+      dockerfile: docker/dockerFiles/Dockerfile
+    volumes:
+      - ./app/:/app
+    ports:
+      - "8080:80"
+    entrypoint:
+      - /entrypoint.sh
