@@ -12,7 +12,7 @@ class GetFile
     private LogCli $log;
 
     /**
-     * GetFile constructor.
+     * GetFileTest constructor.
      * @param bool $verbose, set true for get log
      */
     public function __construct(bool $verbose = false)
@@ -30,33 +30,46 @@ class GetFile
      * @return array
      */
     public function getFilesByExt(string $path, array $exts):array {
-
-        $this->log->info('Base fodler to search : ', $path);
+        $this->log->info('Base folder to search : ', $path);
         $this->log->info('Get files by extension', implode(',',$exts));
 
-
         // Generate regex from exts params.
-        $regex = $this->createRegex($exts, '|');
+        $regexAllowExtension = $this->createRegex($exts, '|');
 
-        $this->log->info('Regex available extension', $regex);
+        $this->log->info('Regex available extension', $regexAllowExtension);
 
         // List of folder exclude for search file.
         $excludeFolder = ['\$RECYCLE\.BIN', 'Trash-1000', 'found\.000'];
-        $regExcludeFolder = $this->createRegex($excludeFolder, '|');
+        $regexDisallowFolder = $this->createRegex($excludeFolder, '|');
 
+        $this->log->info('regex exclude folder : ', $regexDisallowFolder);
 
-        $this->log->info('regex exclude folder : ', $regExcludeFolder);
+        $files = $this->getFilesInDirectory($path, $regexAllowExtension, $regexDisallowFolder);
 
+        $this->log->info('Total file(s) found : ', count($files));
+
+        return $files;
+    }
+
+    /**
+     * Get all files in directory with parameters for allow only files extension and baned folder.
+     * @param string $path
+     * @param $regexAllowExtension, exemple : /mkv|avi/
+     * @param $regexDisallowFolder, exemple : /folder1|folder2/
+     * @return array
+     */
+    public function getFilesInDirectory(string $path, $regexAllowExtension, $regexDisallowFolder):array {
+
+        if(!is_dir($path)){
+            return ['error' => true, 'msg' => $path . ' is not a directory'];
+        }
 
         $directory = new \RecursiveDirectoryIterator($path);
         $iterator = new \RecursiveIteratorIterator($directory);
         $files = [];
 
-
         foreach ($iterator as $info) {
-            $pathInfo = pathinfo($info);
-
-            $pathInfo['full_path'] = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['basename'];
+            $pathInfo = $this->fileInfo($info);
             $mime = mime_content_type($pathInfo['full_path']);
             $extension = $this->misc->mime2ext($mime);
 
@@ -75,17 +88,26 @@ class GetFile
                 continue;
             }
 
-            if(!preg_match_all($regex,$extension) || preg_match_all($regExcludeFolder,$pathInfo['dirname'])){
+            if(!preg_match_all($regexAllowExtension,$extension) || preg_match_all($regexDisallowFolder,$pathInfo['dirname'])){
                 continue;
             }
 
-            $pathInfo['size'] = filesize($pathInfo['full_path']);
             $files[] = $pathInfo;
         }
 
-        $this->log->info('Total file(s) found : ', count($files));
-
         return $files;
+    }
+
+    /**
+     * Return data files ( pathinfo, size, full_path ....)
+     * @param $info
+     * @return string|string[]
+     */
+    public function fileInfo($info){
+        $pathInfo = pathinfo($info);
+        $pathInfo['full_path'] = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['basename'];
+        $pathInfo['size'] = filesize($pathInfo['full_path']);
+        return $pathInfo;
     }
 
     /**
