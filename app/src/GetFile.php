@@ -3,6 +3,7 @@
 namespace FileTools;
 
 use League\CLImate\CLImate;
+use SplFileInfo;
 
 class GetFile
 {
@@ -70,6 +71,11 @@ class GetFile
 
         foreach ($iterator as $info) {
             $pathInfo = $this->fileInfo($info);
+
+            if(isset($pathInfo['error']) && $pathInfo['error']){
+                continue;
+            }
+
             $mime = mime_content_type($pathInfo['full_path']);
             $extension = $this->misc->mime2ext($mime);
 
@@ -103,9 +109,14 @@ class GetFile
      * @param $info
      * @return string|string[]
      */
-    public function fileInfo($info){
+    public function fileInfo(SplFileInfo $info): array {
         $pathInfo = pathinfo($info);
         $pathInfo['full_path'] = $pathInfo['dirname'] . DIRECTORY_SEPARATOR . $pathInfo['basename'];
+
+        if(!is_file($pathInfo['full_path'])){
+            return ['error' => true, 'file : ' . $pathInfo['full_path'] . ' not exist.'];
+        }
+
         $pathInfo['size'] = filesize($pathInfo['full_path']);
         return $pathInfo;
     }
