@@ -1,19 +1,27 @@
 {
-  "name": "your-brand-name/your-project",
-  "type": "library",
-  "description": "Your package description goes here",
-  "keywords": ["relevant","tags","go","here"],
-  "homepage": "https://yourcompany.com",
+  "name": "sauvank/file-tools",
+  "description": "Simple tools for file",
+  "type": "package",
   "license": "MIT",
   "authors": [
     {
-      "name": "Jordi Boggiano",
-      "email": "j.boggiano@seld.be",
-      "homepage": "http://seld.be",
-      "role": "Developer"
+      "name": "John Smith",
+      "email": "john@smith.com"
     }
   ],
-  "require-dev": {
-    "phpunit/phpunit": "^7"
+  "minimum-stability": "stable",
+  "config": {
+    "platform": {
+      "php": "7.4.0"
+    }
+  },
+  "autoload" : {
+    "psr-4": {
+      "FileTools\\": "src/"
+    }
+  },
+  "require": {
+    "league/climate": "^3.5",
+    "ext-fileinfo": "*"
   }
 }

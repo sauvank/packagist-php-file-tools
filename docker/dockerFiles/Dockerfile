@@ -1,7 +1,6 @@
 FROM composer:2.0 as composer
 
 COPY ./app/composer.json /app
-RUN composer require phpunit/phpunit
 RUN composer install
 
 FROM php:7.4-apache

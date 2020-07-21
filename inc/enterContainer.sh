@@ -10,7 +10,7 @@ CMD="docker exec -it -w /app $CONTAINERID bash";
 case "$(uname -s)" in
    Linux)
      echo 'Linux'
-     $CMD
+     sudo $CMD
      ;;
 
    CYGWIN*|MINGW32*|MSYS*|MINGW*)
