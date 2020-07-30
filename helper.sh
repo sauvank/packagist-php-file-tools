@@ -16,8 +16,7 @@ case $ARG_CMD in
     ;;
 
   install)
-       docker-compose up --build -d &&
-       xdg-open http://localhost:8080
+       docker-compose up --build -d
     ;;
 
   enter)
