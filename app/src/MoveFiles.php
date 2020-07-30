@@ -25,13 +25,11 @@ class MoveFiles
         }
 
         if($createOutputPath){
-            echo "\n_________________\n";
             $isCreate = mkdir($SliceOutput['folder_path'], 0700, true);
 
             if(!$isCreate){
                 return ['error' => true, 'msg' => 'Folder output not created !'];
             }
-            echo "\n_________________\n";
         }
 
         $output = $this->replaceNotAllowedCharWindows($output);
