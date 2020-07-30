@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/vendor/autoload.php';
-use FileTools\GetFile;
+use FileTools\MoveFiles;
 
 
-$fileTools = new GetFile(true);
-$files = $fileTools->getFilesByExt(__DIR__ . '/tests/samples', ['mp4','mkv']);
-//var_dump($files);
+$fileTools = new MoveFiles();
+$files = $fileTools->move(__DIR__ . '/tests/test_move/', __DIR__ . '/tests/test_move/ggg.mkv');
+var_dump($files);
