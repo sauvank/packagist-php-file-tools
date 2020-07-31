@@ -24,7 +24,7 @@ class MoveFiles
             return ['error' => true, 'msg' => 'Output path contain any file name !'];
         }
 
-        if($createOutputPath){
+        if($createOutputPath && !is_dir($SliceOutput['folder_path'])){
             $isCreate = mkdir($SliceOutput['folder_path'], 0700, true);
 
             if(!$isCreate){
@@ -36,7 +36,7 @@ class MoveFiles
         $isMove =  rename($src, $output);
 
         $msg = $isMove ? 'File is move from ' . $src . ' to ' . $output : 'File is NOT move !';
-        return ['error' => !$isMove, 'msg' => $msg];
+        return ['error' => !$isMove, 'msg' => $msg, 'new_full_path' => $output];
     }
 
     /**

@@ -36,5 +36,16 @@ final class MoveFilesTest extends TestCase
         rmdir($outputDir);
     }
 
+    public function testReplaceCharNotAllowedByWindowsOutputPath(){
+        $files = new MoveFiles();
+        $src = __DIR__ . '/test_move/test_\'move.mkv';
+        $output = __DIR__ . '/tests/test_move/test_"\'_*_?*_.mkv';
+        $files = $files->move($src, $output);
+        $this->assertEquals(false, $files['error']);
+        rename($files['new_full_path'], $src);
+        rmdir(__DIR__ . '/tests/test_move/test_\'__');
+        rmdir(__DIR__ . '/tests/test_move');
+    }
+
 
 }
