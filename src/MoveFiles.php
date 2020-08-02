@@ -2,7 +2,7 @@
 namespace FileTools;
 
 
-class MoveFiles
+class MoveFiles extends GetFile
 {
 
     /**

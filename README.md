@@ -28,7 +28,7 @@
 * Get file by extension :
 
 ````
- use FileTools\GetFile;
+ use FileTools\FileTools;
  
  // Get All file with extension 'mp4' in folder+
  // If mime type file not equal the extension file return a warning.
@@ -40,9 +40,9 @@
 
 
 ````
- use FileTools\MoveFiles;
+ use FileTools\FileTools;
  
-$moveFiles = new MoveFiles();
+$moveFiles = new FileTools();
 
 $srcFile = __DIR__ . '/myFolder/file.txt';
 $outputPath = __DIR__ . '/myOtherFolder/fileRename.txt';
