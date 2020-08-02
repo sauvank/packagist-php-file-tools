@@ -53,6 +53,7 @@ class MoveFiles
     /**
      * Return a array contain the path and the file name from a path.
      * @param string $path
+     * @return array
      */
     private function sliceNameFileFromPath(string $path){
         preg_match('/[\w-]+\.[\w\d]+/', $path, $callback);
