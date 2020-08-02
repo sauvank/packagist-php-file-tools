@@ -5,7 +5,7 @@
 
 * PHP >=7.4
 
-#### Run with docker
+#### Run with docker (branch : docker)
 
 > ./helper install
 
