@@ -37,17 +37,17 @@ class GetFile
         // Generate regex from exts params.
         $regexAllowExtension = $this->createRegex($exts, '|');
 
-        $this->log->info('Regex available extension', $regexAllowExtension);
+        $this->verbose ? $this->log->info('Regex available extension', $regexAllowExtension) : null;
 
         // List of folder exclude for search file.
         $excludeFolder = ['\$RECYCLE\.BIN', 'Trash-1000', 'found\.000'];
         $regexDisallowFolder = $this->createRegex($excludeFolder, '|');
 
-        $this->log->info('regex exclude folder : ', $regexDisallowFolder);
+        $this->verbose ? $this->log->info('regex exclude folder : ', $regexDisallowFolder) : null;
 
         $files = $this->getFilesInDirectory($path, $regexAllowExtension, $regexDisallowFolder);
 
-        $this->log->info('Total file(s) found : ', count($files));
+        $this->verbose ? $this->log->info('Total file(s) found : ', count($files)) : null;
 
         return $files;
     }
@@ -81,12 +81,12 @@ class GetFile
 
             // extension is not the mime type.
             if($mime !== 'directory' && $extension !== $pathInfo['extension']){
-                $this->log->warning([
+                $this->verbose ? $this->log->warning([
                     'File : ' . $pathInfo['full_path'],
                     'mime type is not equal to extension file.',
                     'mime type file : '. $mime . ' | extension file: ' .$pathInfo['extension'],
                     'Skipping file'
-                ]);
+                ]) : null;
                 continue;
             }
 
