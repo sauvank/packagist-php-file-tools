@@ -31,8 +31,8 @@ class GetFile
      * @return array
      */
     public function getFilesByExt(string $path, array $exts):array {
-        $this->log->info('Base folder to search : ', $path);
-        $this->log->info('Get files by extension', implode(',',$exts));
+        $this->verbose ? $this->log->info('Base folder to search : ', $path): null;
+        $this->verbose ? $this->log->info('Get files by extension', implode(',',$exts)): null;
 
         // Generate regex from exts params.
         $regexAllowExtension = $this->createRegex($exts, '|');
