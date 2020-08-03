@@ -1,12 +1,12 @@
 {
-  "name": "sauvank/file-tools",
-  "description": "Simple tools for file",
+  "name": "sauvank/php-file-tools",
+  "description": "Simple tools for files",
   "type": "package",
   "license": "MIT",
   "authors": [
     {
-      "name": "John Smith",
-      "email": "john@smith.com"
+      "name": "sauvank",
+      "email": "notemail@fake.com"
     }
   ],
   "minimum-stability": "stable",
@@ -22,9 +22,9 @@
   },
   "require": {
     "league/climate": "^3.5",
-    "ext-fileinfo": "*"
+    "ext-fileinfo": "*",
+    "phpunit/phpunit": "^9.2"
   },
   "require-dev": {
-    "phpunit/phpunit": "^7"
   }
 }
