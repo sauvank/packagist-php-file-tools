@@ -64,7 +64,7 @@ class MoveFiles extends GetFile
         $exp = explode('/', $path);
         $lastValue = end($exp);
         // Get if is file name : match myFile.txt or my fyle.txt but no /home/myFile.txt
-        preg_match('/^[^<>:;,?"*|\/]+$/', $lastValue, $match);
+        preg_match('/^[^|\/]+$/', $lastValue, $match);
         return [
             'folder_path' => str_replace($lastValue, '', $path),
             'file_name' => isset($match[0]) ?  $lastValue : false
