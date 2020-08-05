@@ -18,6 +18,10 @@ class MoveFiles extends GetFile
             return ['error' => true, 'msg' => 'File ' . $src . ' not exist !'];
         }
 
+        if (is_file($output)){
+            return ['error' => true, 'msg' => 'File ' . $src . ' already exist !'];
+        }
+
         $SliceOutput = $this->sliceNameFileFromPath($output);
 
         if(!$SliceOutput['file_name']){
@@ -25,6 +29,7 @@ class MoveFiles extends GetFile
         }
 
         if($createOutputPath && !is_dir($SliceOutput['folder_path'])){
+            var_dump($SliceOutput['folder_path']);
             $isCreate = mkdir($SliceOutput['folder_path'], 0700, true);
 
             if(!$isCreate){
@@ -56,10 +61,13 @@ class MoveFiles extends GetFile
      * @return array
      */
     private function sliceNameFileFromPath(string $path){
-        preg_match('/[\w-]+\.[\w\d]+/', $path, $callback);
+        $exp = explode('/', $path);
+        $lastValue = end($exp);
+        // Get if is file name : match myFile.txt or my fyle.txt but no /home/myFile.txt
+        preg_match('/^[^<>:;,?"*|\/]+$/', $lastValue, $match);
         return [
-            'folder_path' => str_replace($callback, '', $path),
-            'file_name' => isset($callback[0]) ? $callback[0] : false
+            'folder_path' => str_replace($lastValue, '', $path),
+            'file_name' => isset($match[0]) ?  $lastValue : false
         ];
     }
 }
