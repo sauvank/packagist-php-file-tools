@@ -29,7 +29,6 @@ class MoveFiles extends GetFile
         }
 
         if($createOutputPath && !is_dir($SliceOutput['folder_path'])){
-            var_dump($SliceOutput['folder_path']);
             $isCreate = mkdir($SliceOutput['folder_path'], 0700, true);
 
             if(!$isCreate){
@@ -38,7 +37,16 @@ class MoveFiles extends GetFile
         }
 
         $output = $this->replaceNotAllowedCharWindows($output);
+
+        $sizeBeforeMove = filesize($src);
+
         $isMove =  rename($src, $output);
+
+        $sizeAfterMove = filesize($output);
+
+        if($sizeBeforeMove !== $sizeAfterMove){
+            return ['error' => true, 'msg' => 'File size output is not equal to the file size input !'];
+        }
 
         $msg = $isMove ? 'File is move from ' . $src . ' to ' . $output : 'File is NOT move !';
         return ['error' => !$isMove, 'msg' => $msg, 'new_full_path' => $output];
