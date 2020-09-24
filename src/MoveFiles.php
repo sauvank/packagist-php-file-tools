@@ -13,8 +13,14 @@ class MoveFiles extends GetFile
      * @return array
      */
     public function move($src, $output, bool $createOutputPath = true): array {
+        $mime = false;
+        try {
+           $mime =  mime_content_type($src);
+        }catch (\Exception $e){
+            return ['error' => true, 'msg' => 'File ' . $src . ' not exist !'];
+        }
 
-        if(!is_file($src)){
+        if(!is_string($mime)){
             return ['error' => true, 'msg' => 'File ' . $src . ' not exist !'];
         }
 
@@ -23,12 +29,12 @@ class MoveFiles extends GetFile
         }
 
         $SliceOutput = $this->sliceNameFileFromPath($output);
-
         if(!$SliceOutput['file_name']){
             return ['error' => true, 'msg' => 'Output path contain any file name !'];
         }
 
         if($createOutputPath && !is_dir($SliceOutput['folder_path'])){
+            var_dump($SliceOutput['folder_path']);
             $isCreate = mkdir($SliceOutput['folder_path'], 0700, true);
 
             if(!$isCreate){
@@ -37,16 +43,7 @@ class MoveFiles extends GetFile
         }
 
         $output = $this->replaceNotAllowedCharWindows($output);
-
-        $sizeBeforeMove = filesize($src);
-
         $isMove =  rename($src, $output);
-
-        $sizeAfterMove = filesize($output);
-
-        if($sizeBeforeMove !== $sizeAfterMove){
-            return ['error' => true, 'msg' => 'File size output is not equal to the file size input !'];
-        }
 
         $msg = $isMove ? 'File is move from ' . $src . ' to ' . $output : 'File is NOT move !';
         return ['error' => !$isMove, 'msg' => $msg, 'new_full_path' => $output];
