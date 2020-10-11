@@ -21,42 +21,144 @@
 
 ####
 
-* Insall with composer :
+* Install with composer :
  
   > composer require sauvank/file-tools
-  
-* Get file by extension :
+
+#### List function
 
 ````
- use FileTools\FileTools;
+move(string $src, string $output, bool $createOutputPath [default : true]): File
+
+* string $src, source of the file to move
+* string $output, output of the file
+* bool $createOutputPath, default true, if the folder does not exist, create them.
+
+Return instance of File in case of success or Exeption if error
+.
+````
+* $files, multidimensional array.
+    * each array need :
+        * string 'src', source of the file to move
+        * string 'output', output of the file
+    * optional :
+        * bool 'createOutputPath' default true, if the folder does not exist, create them.
+
+
+____________
+
+````
+moveMultiple(array $files)
+
+````
+* $files
+    * each array need :
+        * string 'src', source of the file to move
+        * output 'src', output of the file
+    * optional :
+        * bool 'createOutputPath' default true, if the folder does not exist, create them.
+
+Return array instance File in case of success or Exeption if error
+____________
+
+### Exemple : 
  
- // Get All file with extension 'mp4' in folder+
- // If mime type file not equal the extension file return a warning.
- $callback = $files = $files->getFilesByExt('My/Path/Files', ['mp4']);
-````
-
-
-* Move files 
-
-
-````
- use FileTools\FileTools;
+#### move one files 
+ ````
+ use FileTools\MoveFile;
+ $moveFile = new MoveFile();
  
-$moveFiles = new FileTools();
+ try{
+     $result = $mv->move('tests/test_unit.mp4', 'tests/test_unit.mp4');
+     // instance of File
+ }catch (Exception $e){
+     var_dump('Catch: ' . $e->getMessage());
+ }
+ ````
+ 
+#### move multiple files 
 
-$srcFile = __DIR__ . '/myFolder/file.txt';
-$outputPath = __DIR__ . '/myOtherFolder/fileRename.txt';
-$callback = $files->move($srcFile, $outputPath);
+> exemple : 
+
+````
+use FileTools\MoveFile;
+$moveFile = new MoveFile();
+$data = [
+    [
+        'src' => 'tests/samples/fake_mkv.mkv',
+        'output' => 'tests/samples/',
+        'createOutputPath' => false
+    ],
+    [
+        'src' => 'tests/samples/ii.mkv',
+        'output' => 'tests/samples/',
+        'createOutputPath' => false
+    ],
+    [
+        'src' => 'tests/samples/fake_mkv.mkv',
+        'output' => 'tests/samples/ii/',
+        'createOutputPath' => false
+    ],
+];
+
+try{
+    $result = $moveFile->moveMultiple($data);
+    // array instance of File
+}catch (Exception $e){
+    var_dump('Catch: ' . $e->getMessage());
+}
+
 ````
 
-By default, the function 'move' create the folder output if not exist.
-If you don't want to create the folder if it doesn't exist: pass false on the three params: 
+
+### Class File function 
 
 ````
-$callback = $files->move($srcFile, $outputPath, false);
+getDirname(): ?string
 ````
 
-##### Todo
+````
+setDirname($dirname): void
+````
 
-* Move multiple file.
-* Create option for log file move.
+````
+getBasename(): ?string
+````
+
+````
+setBasename($basename): void
+````
+````
+getExtension(): ?string
+````
+````
+setExtension($extension): void
+````
+````
+getFilename(): ?string
+````
+````
+setFilename($filename): void
+````
+````
+getFullPath(): ?string
+````
+````
+getMimeType(): ?string
+````
+````
+setMimeType($mimeType): void
+````
+````
+getFileSize():?int
+````
+````
+setFileSize($fileSize): void
+````
+````
+getLastPath(): ?string
+````
+````
+setLastPath($lastPath): void
+````
+

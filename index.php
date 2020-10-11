@@ -2,10 +2,9 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use FileTools\MoveFile;
-use FileTools\MoveFiles;
 
 
-$test = new MoveFile();
+$moveFile = new MoveFile();
 $data = [
     [
         'src' => 'tests/samples/fake_mkv.mkv',
@@ -26,8 +25,7 @@ $data = [
 
 
 try{
-    $test->moveMultiple($data);
-
+    $moveFile->moveMultiple($data);
 }catch (Exception $e){
     var_dump('Catch: ' . $e->getMessage());
 }

@@ -14,7 +14,7 @@ class File
     /**
      * @return mixed
      */
-    public function getDirname()
+    public function getDirname():?string
     {
         return $this->dirname;
     }
@@ -30,7 +30,7 @@ class File
     /**
      * @return mixed
      */
-    public function getBasename()
+    public function getBasename():?string
     {
         return $this->basename;
     }
@@ -46,7 +46,7 @@ class File
     /**
      * @return mixed
      */
-    public function getExtension()
+    public function getExtension():?string
     {
         return $this->extension;
     }
@@ -62,7 +62,7 @@ class File
     /**
      * @return mixed
      */
-    public function getFilename()
+    public function getFilename():?string
     {
         return $this->filename;
     }
@@ -78,7 +78,7 @@ class File
     /**
      * @return mixed
      */
-    public function getFullPath()
+    public function getFullPath():?string
     {
         return $this->dirname . DIRECTORY_SEPARATOR . $this->filename .'.'.$this->extension;
     }
@@ -86,7 +86,7 @@ class File
     /**
      * @return mixed
      */
-    public function getMimeType()
+    public function getMimeType():?string
     {
         return $this->mimeType;
     }
@@ -102,7 +102,7 @@ class File
     /**
      * @return null
      */
-    public function getFileSize()
+    public function getFileSize():?int
     {
         return $this->fileSize;
     }
@@ -118,7 +118,7 @@ class File
     /**
      * @return null
      */
-    public function getLastPath()
+    public function getLastPath():?string
     {
         return $this->lastPath;
     }
