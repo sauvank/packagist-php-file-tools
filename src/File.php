@@ -11,6 +11,20 @@ class File
     protected ?string $mimeType = null;
     protected ?int $fileSize = null;
     protected ?string $lastPath = null;
+
+    public function __construct(array $pathInfo = [])
+    {
+        if(count($pathInfo) === 0){
+            return;
+        }
+
+        $this->dirname = $pathInfo['dirname'];
+        $this->basename = $pathInfo['basename'];
+        $this->extension = $pathInfo['extension'];
+        $this->filename = $pathInfo['filename'];
+
+    }
+
     /**
      * @return mixed
      */
@@ -88,15 +102,7 @@ class File
      */
     public function getMimeType():?string
     {
-        return $this->mimeType;
-    }
-
-    /**
-     * @param mixed $mimeType
-     */
-    public function setMimeType($mimeType): void
-    {
-        $this->mimeType = $mimeType;
+        return mime_content_type($this->fullPath);
     }
 
     /**
@@ -104,15 +110,7 @@ class File
      */
     public function getFileSize():?int
     {
-        return $this->fileSize;
-    }
-
-    /**
-     * @param null $fileSize
-     */
-    public function setFileSize($fileSize): void
-    {
-        $this->fileSize = $fileSize;
+        return filesize($this->fullPath);
     }
 
     /**

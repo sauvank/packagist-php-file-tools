@@ -28,7 +28,7 @@
 #### List function
 
 ````
-move(string $src, string $output, bool $createOutputPath [default : true]): File
+MoveFile::move(string $src, string $output, bool $createOutputPath [default : true]): File
 
 * string $src, source of the file to move
 * string $output, output of the file
@@ -48,10 +48,10 @@ Return instance of File in case of success or Exeption if error
 ____________
 
 ````
-moveMultiple(array $files)
+MoveFile::moveMultiple(array $files)
 
 ````
-* $files
+* $files, multidimentionnal array
     * each array need :
         * string 'src', source of the file to move
         * output 'src', output of the file
@@ -60,6 +60,20 @@ moveMultiple(array $files)
 
 Return array instance File in case of success or Exeption if error
 ____________
+
+
+````
+GetFile::byExtension(string $folderPath, array $extsToGet = [], array $excludeFolder = ['\$RECYCLE\.BIN', 'Trash-1000', 'found\.000'])
+
+````
+* string $folderPath, path of the folder to get files
+* array $extsToGet, array contain extention files to get. ex: ['mkv', 'mp4']
+* array $excludeFolder, array contain folder name to exclude.
+
+Return array instance File or Exeption if error
+____________
+
+
 
 ### Exemple : 
  
@@ -146,14 +160,9 @@ getFullPath(): ?string
 ````
 getMimeType(): ?string
 ````
-````
-setMimeType($mimeType): void
-````
+
 ````
 getFileSize():?int
-````
-````
-setFileSize($fileSize): void
 ````
 ````
 getLastPath(): ?string

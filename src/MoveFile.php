@@ -52,8 +52,6 @@ class MoveFile{
         $file->setDirname($pathInfo['dirname']);
         $file->setExtension($pathInfo['extension']);
         $file->setFilename($pathInfo['filename']);
-        $file->setMimeType(mime_content_type($output));
-        $file->setFileSize(filesize($output));
         $file->setLastPath($src);
         return $file;
     }
