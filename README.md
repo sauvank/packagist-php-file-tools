@@ -28,7 +28,7 @@
 #### List function
 
 ````
-MoveFile::move(string $src, string $output, bool $createOutputPath [default : true]): File
+MoveFile::move(string $src, string $output, bool $createOutputPath [default : true], $windowsNameValid [default : true]): File
 
 * string $src, source of the file to move
 * string $output, output of the file
@@ -43,6 +43,7 @@ Return instance of File in case of success or Exeption if error
         * string 'output', output of the file
     * optional :
         * bool 'createOutputPath' default true, if the folder does not exist, create them.
+        * bool 'windowsNameValid' default true, modify the output path to be valid for windows.
 
 
 ____________

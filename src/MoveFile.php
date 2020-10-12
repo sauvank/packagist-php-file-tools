@@ -16,10 +16,14 @@ class MoveFile{
      * @param string $src
      * @param string $output
      * @param bool $createOutputPath
-     * @return bool
+     * @param bool $windowsNameValid, change the name to be valid for windows
+     * @return File
      * @throws \Exception
      */
-    public function move(string $src, string $output, bool $createOutputPath = true):File {
+    public function move(string $src, string $output, bool $createOutputPath = true,$windowsNameValid = true):File {
+        if($windowsNameValid){
+            $output = $this->replaceNotAllowedCharWindows($output);
+        }
 
         $outputDir = dirname($output);
         $outputFileName = basename($output);
@@ -119,5 +123,17 @@ class MoveFile{
      */
     private function checkValidFileName(string $path){
             return preg_match('/(\.)()[a-zA-Z0-9]+$/', $path) > 0;
+    }
+
+
+    /**
+     * Replace not allowed char in file/folder by windows
+     * @param string $string
+     * @param string $replaceBy
+     * @return string
+     */
+    private function replaceNotAllowedCharWindows(string $string, string $replaceBy = '-'): string {
+        $regexNotAllowCharWindows = '/\\|\\|\/|:|\*|\?|"|<|>|\|/m';
+        return preg_replace($regexNotAllowCharWindows,$replaceBy,$string);
     }
 }

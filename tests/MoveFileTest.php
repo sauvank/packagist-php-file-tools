@@ -193,4 +193,14 @@ class MoveFileTest extends TestCase{
 
         unlink('tests/test_unit.mp4');
     }
+
+    public function testRenameFileForValidNameWindows(){
+        $fileTest = 'tests/test4.pm4';
+        copy('tests/samples/big_buck_bunny_720p_10mb.mp4', $fileTest);
+        $mv = new \FileTools\MoveFile();
+        $result = $mv->move($fileTest, 'tests/tes:ts/test_:unit"mp?4.mp4');
+        $this->assertEquals($result->getFullPath(), "tests/tes-ts/test_-unit-mp-4.mp4");
+        unlink($result->getFullPath());
+        rmdir($result->getDirname());
+    }
 }
