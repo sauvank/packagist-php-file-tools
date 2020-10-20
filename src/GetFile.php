@@ -41,4 +41,27 @@ class GetFile{
         return $files;
 
     }
+
+    /**
+     * Get file by folder and extension, return multidimentional array with key equal folder and value equal file
+     * @param string $folderPath
+     * @param array $extsToGet
+     * @param array $excludeFolder
+     * @return array
+     * @throws \Exception
+     */
+    public function byFolderAndExtension(string $folderPath, array $extsToGet = [], array $excludeFolder = ['\$RECYCLE\.BIN', 'Trash-1000', 'found\.000']):array {
+        $files = $this->byExtension( $folderPath, $extsToGet = [], $excludeFolder = ['\$RECYCLE\.BIN', 'Trash-1000', 'found\.000']);
+
+        $folders= [];
+
+        foreach ($files as $file){
+            if(!isset($folders[$file->getDirname()])){
+                $folders[$file->getDirname()] = [];
+            }
+            $folders[$file->getDirname()][] = $file;
+        }
+
+        return $folders;
+    }
 }

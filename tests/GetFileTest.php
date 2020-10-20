@@ -33,6 +33,36 @@ class GetFileTest extends TestCase{
         $this->assertTrue(true);
     }
 
+    public function testGetFileByFolderAndExt(){
+        $folder1 = $this->tmpFolder . 'death note';
+        $folder2 = $this->tmpFolder . 'futurama';
+        mkdir($folder1, 0777, true);
+        mkdir($folder2);
+
+        copy('tests/samples/SampleVideo_360x240_20mb.mkv',$folder1."/folder 1 file 1.mkv");
+        copy('tests/samples/SampleVideo_360x240_20mb.mkv',$folder1."/folder 1 file 2.avi");
+        copy('tests/samples/SampleVideo_360x240_20mb.mkv',$folder1."/folder 1 file 3.avi");
+        copy('tests/samples/SampleVideo_360x240_20mb.mkv',$folder2."/folder 2 file 1.mkv");
+        copy('tests/samples/SampleVideo_360x240_20mb.mkv',$folder2."/folder 2 file 2.mkv");
+        copy('tests/samples/SampleVideo_360x240_20mb.mkv',$folder2."/folder 2 file 3.mkv");
+
+        $gf = new \FileTools\GetFile();
+        $files = $gf->byFolderAndExtension($this->tmpFolder,  ['mkv','avi']);
+
+        $this->assertEquals(count($files[$folder1]), 3);
+        $this->assertEquals(count($files[$folder2]), 3);
+
+        unlink($folder1."/folder 1 file 1.mkv");
+        unlink($folder1."/folder 1 file 2.avi");
+        unlink($folder1."/folder 1 file 3.avi");
+        unlink($folder2."/folder 2 file 1.mkv");
+        unlink($folder2."/folder 2 file 2.mkv");
+        unlink($folder2."/folder 2 file 3.mkv");
+        rmdir($folder1);
+        rmdir($folder2);
+        rmdir($this->tmpFolder);
+    }
+
     private function createTestFiles(){
         mkdir($this->tmpFolder);
 

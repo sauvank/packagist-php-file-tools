@@ -75,6 +75,32 @@ Return array instance File or Exeption if error
 ____________
 
 
+````
+GetFile::byFolderAndExtension(string $folderPath, array $extsToGet = [], array $excludeFolder = ['\$RECYCLE\.BIN', 'Trash-1000', 'found\.000'])
+
+````
+* string $folderPath, path of the folder to get files
+* array $extsToGet, array contain extention files to get. ex: ['mkv', 'mp4']
+* array $excludeFolder, array contain folder name to exclude.
+
+Return array ultidimentional array with key equal folder and value equal file or Exeption if error
+
+exemple return : [
+
+    ["folder_path/folder 1"]=> [
+        0 => object(FileTools\File),
+        1 => object(FileTools\File),
+        2 => object(FileTools\File),
+    ],
+    ["folder_path/folder 2"]=> [
+            0 => object(FileTools\File),
+            1 => object(FileTools\File),
+            2 => object(FileTools\File),
+    ],  
+]
+____________
+
+
 
 ### Exemple : 
  
